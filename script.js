@@ -280,3 +280,73 @@ function scrollBottom() {
     chatBox.scrollTop = chatBox.scrollHeight;
 
 }
+
+function resetChat() {
+
+    const result = confirm("Are you sure you want to clear the chat?");
+
+    if (!result) {
+        return;
+    }
+
+    chatBox.innerHTML = "";
+
+    const welcome = document.createElement("div");
+
+    welcome.className = "bot-message";
+
+    welcome.innerHTML = `
+        👋 Hello!
+
+        <br><br>
+
+        I am your RAG Technology Assistant.
+
+        <br><br>
+
+        Ask me anything about RAG Technology.
+    `;
+
+    chatBox.appendChild(welcome);
+
+    historyData = [];
+
+    displayHistory();
+
+    userInput.value = "";
+
+    userInput.focus();
+
+}
+function addBotMessage(message) {
+
+    const wrapper = document.createElement("div");
+
+    wrapper.className = "message bot";
+
+    wrapper.innerHTML = `
+        <div class="avatar bot-avatar">
+            🤖
+        </div>
+
+        <div class="bot-message">
+            <p>${message}</p>
+            <small class="time">${getCurrentTime()}</small>
+        </div>
+    `;
+
+    chatBox.appendChild(wrapper);
+
+    scrollBottom();
+}function getCurrentTime() {
+
+    return new Date().toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+
+}function scrollBottom() {
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+}
