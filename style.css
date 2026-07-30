@@ -454,3 +454,58 @@ font-size:22px;
 }
 
 }
+/*==========================
+History Panel
+==========================*/
+
+.history-panel{
+
+    display:none;
+
+    background:white;
+
+    padding:20px;
+
+    border-bottom:1px solid #ddd;
+
+    max-height:220px;
+
+    overflow:auto;
+
+}
+
+.history-panel h5{
+
+    margin-bottom:15px;
+
+}
+
+.history-panel ul{
+
+    list-style:none;
+
+    padding:0;
+
+}
+
+.history-panel li{
+
+    background:#f1f5f9;
+
+    padding:10px;
+
+    border-radius:10px;
+
+    margin-bottom:10px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.history-panel li:hover{
+
+    background:#dbeafe;
+
+}

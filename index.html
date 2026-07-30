@@ -37,20 +37,48 @@
 
         <div class="chat-header">
 
-            <div>
+    <div>
+        <h3>
+            🤖 RAG Technology ChatBot
+        </h3>
 
-                <h3>
-                    <i class="bi bi-robot"></i>
-                    RAG Technology ChatBot
-                </h3>
+        <p>
+            Ask Anything About RAG Technology
+        </p>
+    </div>
 
-                <p>
-                    Ask anything about Retrieval-Augmented Generation
-                </p>
+    <div>
 
-            </div>
+        <button
+            id="historyBtn"
+            class="btn btn-warning">
 
-        </div>
+            <i class="bi bi-clock-history"></i>
+
+            History
+
+        </button>
+
+        <button
+            id="resetBtn"
+            class="btn btn-danger">
+
+            <i class="bi bi-trash"></i>
+
+            Reset
+
+        </button>
+
+    </div>
+
+</div>
+<div id="historyPanel" class="history-panel">
+
+    <h5>📜 Search History</h5>
+
+    <ul id="historyList"></ul>
+
+</div>
 
         <!-- Chat Area -->
 

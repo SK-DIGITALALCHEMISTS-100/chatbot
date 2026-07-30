@@ -1,30 +1,48 @@
 // ==========================================
-// Get HTML Elements
+// ChatBot JavaScript
 // ==========================================
+
+// ------------------------------------------
+// Variables
+// ------------------------------------------
+
+let historyData = [];
 
 const chatBox = document.getElementById("chatBox");
 const userInput = document.getElementById("userInput");
 const sendBtn = document.getElementById("sendBtn");
+const historyBtn = document.getElementById("historyBtn");
+const resetBtn = document.getElementById("resetBtn");
 
 // ==========================================
-// Send Button Click
+// Event Listeners
 // ==========================================
 
+// Send Button
 sendBtn.addEventListener("click", sendMessage);
 
-// ==========================================
-// Press Enter Key
-// ==========================================
-
+// Enter Key
 userInput.addEventListener("keypress", function (event) {
-
     if (event.key === "Enter") {
-
         sendMessage();
+    }
+});
 
+// History Button
+historyBtn.addEventListener("click", function () {
+
+    const panel = document.getElementById("historyPanel");
+
+    if (panel.style.display === "block") {
+        panel.style.display = "none";
+    } else {
+        panel.style.display = "block";
     }
 
 });
+
+// Reset Button
+resetBtn.addEventListener("click", resetChat);
 
 // ==========================================
 // Main Function
@@ -33,33 +51,94 @@ userInput.addEventListener("keypress", function (event) {
 function sendMessage() {
 
     // Get User Input
-
     const message = userInput.value.trim();
 
-    // Empty Input
-
+    // Empty Validation
     if (message === "") {
-
         return;
-
     }
 
-    // Display User Message
-
+    // Show User Message
     addUserMessage(message);
 
-    // Clear Input
+    // Store Search History
+    historyData.push(message);
 
+    // Display History
+    displayHistory();
+
+    // Clear Input Box
     userInput.value = "";
 
     // Search Answer
-
     searchAnswer(message);
 
 }
 
 // ==========================================
-// Display User Message
+// Display Search History
+// ==========================================
+
+function displayHistory() {
+
+    const historyList = document.getElementById("historyList");
+
+    historyList.innerHTML = "";
+
+    historyData.forEach(function (item) {
+
+        const li = document.createElement("li");
+
+        li.innerHTML = "🔍 " + item;
+
+        li.onclick = function () {
+            userInput.value = item;
+        };
+
+        historyList.appendChild(li);
+
+    });
+
+}
+
+// ==========================================
+// Reset Chat
+// ==========================================
+
+function resetChat() {
+
+    const confirmReset = confirm("Do you want to clear the chat?");
+
+    if (!confirmReset) {
+        return;
+    }
+
+    chatBox.innerHTML = `
+
+        <div class="bot-message">
+
+            👋 Hello!
+
+            <br><br>
+
+            I am your RAG Technology Assistant.
+
+            <br><br>
+
+            Ask me anything about RAG Technology.
+
+        </div>
+
+    `;
+
+    historyData = [];
+
+    displayHistory();
+
+}
+
+// ==========================================
+// Add User Message
 // ==========================================
 
 function addUserMessage(message) {
@@ -82,37 +161,28 @@ function addUserMessage(message) {
 
 function searchAnswer(question) {
 
-    // Convert Lowercase
-
+    // Convert to Lowercase
     question = question.toLowerCase();
 
-    // Typing Animation
-
+    // Show Typing Animation
     showTyping();
 
-    // Wait 1 second
-
+    // Wait for 1 Second
     setTimeout(function () {
 
         removeTyping();
 
         let answer = null;
 
-        // Loop Through All Data
-
+        // Loop Through Knowledge Base
         for (let i = 0; i < chatbotData.length; i++) {
-
-            // Current Object
 
             const item = chatbotData[i];
 
             // Loop Keywords
-
             for (let j = 0; j < item.keywords.length; j++) {
 
                 const keyword = item.keywords[j];
-
-                // Check Keyword
 
                 if (question.includes(keyword)) {
 
@@ -124,18 +194,13 @@ function searchAnswer(question) {
 
             }
 
-            // Stop Searching
-
             if (answer !== null) {
-
                 break;
-
             }
 
         }
 
-        // Not Found
-
+        // No Match
         if (answer === null) {
 
             answer =
@@ -143,8 +208,7 @@ function searchAnswer(question) {
 
         }
 
-        // Display Bot Answer
-
+        // Show Bot Response
         addBotMessage(answer);
 
     }, 1000);
@@ -152,7 +216,7 @@ function searchAnswer(question) {
 }
 
 // ==========================================
-// Bot Message
+// Add Bot Message
 // ==========================================
 
 function addBotMessage(message) {
@@ -182,13 +246,9 @@ function showTyping() {
     typing.id = "typing";
 
     typing.innerHTML = `
-
         <span></span>
-
         <span></span>
-
         <span></span>
-
     `;
 
     chatBox.appendChild(typing);
@@ -198,7 +258,7 @@ function showTyping() {
 }
 
 // ==========================================
-// Remove Typing
+// Remove Typing Animation
 // ==========================================
 
 function removeTyping() {
@@ -206,9 +266,7 @@ function removeTyping() {
     const typing = document.getElementById("typing");
 
     if (typing) {
-
         typing.remove();
-
     }
 
 }
